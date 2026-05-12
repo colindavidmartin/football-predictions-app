@@ -144,7 +144,12 @@ async function saveAllPredictions() {
         predicted_away_goals: Number(prediction.away),
       }
     })
-    .filter(Boolean)
+    .filter((row): row is {
+  entry_id: string
+  fixture_id: string
+  predicted_home_goals: number
+  predicted_away_goals: number
+} => row !== null)
 
   if (rows.length === 0) {
     setMessage('No unlocked completed predictions to save.')
