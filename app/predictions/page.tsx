@@ -13,6 +13,7 @@ export default function PredictionsPage() {
     loadPage()
   }, [])
 
+ 
   async function loadPage() {
     const { data: { user } } = await supabase.auth.getUser()
 

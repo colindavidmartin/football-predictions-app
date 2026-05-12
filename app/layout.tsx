@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Link from 'next/link'
+import NavBar from './components/NavBar'
 
 export const metadata: Metadata = {
   title: 'Football Predictions',
@@ -15,16 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="border-b bg-gray-200 px-4 py-3">
-          <div className="flex gap-6 text-sm font-semibold text-black">
-            <Link href="/">Home</Link>
-            <Link href="/fixtures">Fixtures</Link>
-            <Link href="/predictions">Predictions</Link>
-            <Link href="/standings">Standings</Link>
-            <Link href="/login">Login</Link>
-            <Link href="/admin/results">Admin Results</Link>
-          </div>
-        </nav>
+        <NavBar />
 
         {children}
       </body>

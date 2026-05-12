@@ -5,7 +5,7 @@ export default function HomePage() {
     <main className="min-h-screen p-6">
       <section className="mx-auto max-w-3xl rounded-xl border bg-white p-6 shadow-sm">
         <h1 className="text-4xl font-bold mb-3">
-          World Cup Predictor
+          World Cup 2026 Predictor Game
         </h1>
 
         <p className="mb-6 text-gray-700">
@@ -25,7 +25,7 @@ export default function HomePage() {
         </ul>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/fixtures" className="rounded bg-black px-4 py-2 text-sm text-white">
+          <Link href="/fixtures" className="rounded border px-4 py-2 text-sm">
             View Fixtures
           </Link>
 
@@ -35,6 +35,10 @@ export default function HomePage() {
 
           <Link href="/standings" className="rounded border px-4 py-2 text-sm">
             View Standings
+          </Link>
+
+          <Link href="/login" className="rounded border px-4 py-2 text-sm">
+            Login
           </Link>
         </div>
       </section>
