@@ -11,7 +11,8 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'https://football-predictions-app-cyan.vercel.app//auth/callback',
+        emailRedirectTo: 'https://football-predictions-app-cyan.vercel.app/auth/callback',
+        
       },
     })
 
