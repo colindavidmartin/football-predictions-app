@@ -21,6 +21,7 @@ export default function RootLayout({
             <Link href="/fixtures">Fixtures</Link>
             <Link href="/predictions">Predictions</Link>
             <Link href="/standings">Standings</Link>
+            <Link href="/login">Login</Link>
             <Link href="/admin/results">Admin Results</Link>
           </div>
         </nav>
