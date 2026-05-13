@@ -8,12 +8,24 @@ export default function AuthCallbackPage() {
   const router = useRouter()
 
   useEffect(() => {
-    async function handleAuth() {
-      await supabase.auth.getSession()
-      router.push('/predictions')
+    async function handleAuthCallback() {
+      const { data, error } = await supabase.auth.getSession()
+
+      if (error) {
+        console.error(error)
+        router.push('/login')
+        return
+      }
+
+      if (data.session) {
+        router.push('/predictions')
+        return
+      }
+
+      router.push('/login')
     }
 
-    handleAuth()
+    handleAuthCallback()
   }, [router])
 
   return (

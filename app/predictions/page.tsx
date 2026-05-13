@@ -56,8 +56,16 @@ export default function PredictionsPage() {
 
     const { data: fixtureRows } = await supabase
       .from('fixtures')
-      .select('*')
+      .select(`
+        *,
+        prediction_scores (
+          points,
+          exact_score,
+          correct_result
+        )
+      `)
       .eq('competition_id', competition.id)
+      .eq('prediction_scores.entry_id', entry.id)
       .order('kickoff_at')
 
     setFixtures(fixtureRows ?? [])
@@ -218,6 +226,8 @@ async function saveAllPredictions() {
               <th className="p-2 text-center">H</th>
               <th className="p-2 text-center">A</th>
               <th className="p-2 text-left">Away</th>
+                  <th className="p-2 text-center">Actual</th>
+                  <th className="p-2 text-center">Pts</th>
               <th className="p-2 text-left">Save</th>
             </tr>
           </thead>
@@ -291,6 +301,18 @@ async function saveAllPredictions() {
                   <td className="p-2 font-medium">
                     {fixture.away_team}
                   </td>
+
+                      <td className="p-2 text-center">
+                        {fixture.completed
+                          ? `${fixture.result_home_goals}-${fixture.result_away_goals}`
+                          : '-'}
+                      </td>
+
+                      <td className="p-2 text-center font-bold">
+                        {fixture.completed
+                          ? fixture.prediction_scores?.[0]?.points ?? 0
+                          : '-'}
+                      </td>
 
                   <td className="p-2">
                     <button
