@@ -1,4 +1,7 @@
+export const dynamic = 'force-dynamic'
+
 import { supabase } from '../../lib/supabase'
+
 
 export default async function StandingsPage() {
   const { data: competition } = await supabase
