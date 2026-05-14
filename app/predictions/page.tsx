@@ -168,12 +168,38 @@ async function saveAllPredictions() {
     setMessage(`Saved ${rows.length} predictions.`)
   }
   }
-  const completedCount = fixtures.filter((fixture) => {
-    const p = predictions[fixture.id]
-    return p?.home !== undefined && p?.home !== '' && p?.away !== undefined && p?.away !== ''
-  }).length
-  const missingCount = fixtures.length - completedCount
-  const hasMissingPredictions = missingCount > 0
+const savedCount = fixtures.filter((fixture) => {
+  const p = predictions[fixture.id]
+  return p?.home !== undefined && p?.home !== '' && p?.away !== undefined && p?.away !== ''
+}).length
+
+const missingOpenCount = fixtures.filter((fixture) => {
+  const p = predictions[fixture.id]
+  const hasPrediction =
+    p?.home !== undefined &&
+    p?.home !== '' &&
+    p?.away !== undefined &&
+    p?.away !== ''
+
+  const locked = new Date(fixture.lock_at) <= new Date()
+
+  return !hasPrediction && !locked
+}).length
+
+const missedLockedCount = fixtures.filter((fixture) => {
+  const p = predictions[fixture.id]
+  const hasPrediction =
+    p?.home !== undefined &&
+    p?.home !== '' &&
+    p?.away !== undefined &&
+    p?.away !== ''
+
+  const locked = new Date(fixture.lock_at) <= new Date()
+
+  return !hasPrediction && locked
+}).length
+
+const hasMissingPredictions = missingOpenCount > 0
 
   return (
     <main className="min-h-screen p-4">
@@ -181,9 +207,10 @@ async function saveAllPredictions() {
         Enter Predictions
       </h1>
 
-        <p className="mb-2 text-sm text-gray-600">
-        Predictions completed: {completedCount} / {fixtures.length} · Missing: {missingCount}
-        </p>
+      <p className="mb-2 text-sm text-gray-600">
+        Predictions saved: {savedCount} / {fixtures.length} · Missing open: {missingOpenCount} · Missed locked: {missedLockedCount}
+      </p>
+
         {hasMissingPredictions && (
         <p className="mb-4 text-sm text-yellow-700 font-medium">
         You still have missing predictions. Blank predictions will score 0 (zero) points once locked.

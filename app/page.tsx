@@ -38,7 +38,7 @@ export default function HomePage() {
           </Link>
 
           <Link href="/login" className="rounded border px-4 py-2 text-sm">
-            Login
+            Login / Register
           </Link>
         </div>
       </section>

@@ -39,7 +39,7 @@ export default function NavBar() {
             Log out
           </button>
         ) : (
-          <Link href="/login">Log in</Link>
+          <Link href="/login">Log in / Register</Link>
         )}
       </div>
 
