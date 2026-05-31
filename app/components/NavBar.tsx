@@ -25,27 +25,64 @@ export default function NavBar() {
   return (
     <nav className="flex items-center justify-between border-b bg-gray-200 px-4 py-3">
       <div className="flex gap-6 text-sm font-semibold text-black">
-        <Link href="/">Home</Link>
-        <Link href="/fixtures">Fixtures</Link>
+        
+        <Link href="/" className="hover:underline">
+        Home
+        </Link>
+
+
+        <Link
+        href="/fixtures"
+        className="hover:underline"
+        > Fixtures
+        </Link>
 
         {loggedIn && (
-          <Link href="/predictions">Predictions</Link>
+            <Link
+            href="/predictions"
+            className="hover:underline"
+            >   Predictions
+            </Link>
         )}
 
-        <Link href="/standings">Standings</Link>
+            <Link
+            href="/prediction-stats"
+            className="hover:underline"
+            >   Prediction Stats
+            </Link>
+
+        <Link
+        href="/standings"
+        className="hover:underline"
+        > Standings
+        </Link>
 
         {loggedIn ? (
-          <button onClick={handleLogout}>
-            Log out
-          </button>
-        ) : (
-          <Link href="/login">Log in / Register</Link>
-        )}
+  <button
+    type="button"
+    onClick={handleLogout}
+    className="hover:underline"
+  >
+    Log out
+  </button>
+) : (
+  <Link
+    href="/login"
+    className="hover:underline"
+  >
+    Log in / Register
+  </Link>
+)}
       </div>
 
       <div className="text-sm font-semibold text-black">
-        <Link href="/admin/results">Admin Results</Link>
-      </div>
+      <Link
+        href="/admin/results"
+        className="hover:underline"
+        > Admin Results
+        </Link>
+      
+       </div>
     </nav>
   )
 }

@@ -125,9 +125,17 @@ export default function StandingsPage() {
               <th className="p-2 text-left">Pos</th>
               <th className="p-2 text-left">Player</th>
               <th className="p-2 text-left">League</th>
-              <th className="p-2 text-right">Pts</th>
-              <th className="p-2 text-right">Exact</th>
-              <th className="p-2 text-right">Results</th>
+
+              <th className="p-2 text-right">Points Scored</th>
+
+              <th className="p-2 text-right whitespace-normal leading-tight max-w-[90px]">
+              Correct Results & Scores
+              </th>
+              
+              <th className="p-2 text-right">Correct Results</th>
+            
+
+
             </tr>
           </thead>
 
