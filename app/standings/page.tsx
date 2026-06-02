@@ -37,13 +37,18 @@ export default function StandingsPage() {
   async function loadStandings() {
     setMessage('')
 
-    let standingsQuery =
-      selectedRound === 'Overall'
-        ? supabase.from('league_table').select('*')
-        : supabase
-            .from('league_table_by_round')
-            .select('*')
-            .eq('round_number', Number(selectedRound))
+    let standingsQuery
+
+    if (selectedRound === 'Overall') {
+      standingsQuery = supabase.from('league_table').select('*')
+    } else if (selectedRound === 'Special') {
+      standingsQuery = supabase.from('league_table_special_matches').select('*')
+    } else {
+      standingsQuery = supabase
+        .from('league_table_by_round')
+        .select('*')
+        .eq('round_number', Number(selectedRound))
+    }
 
     if (selectedLeague !== 'All') {
       standingsQuery = standingsQuery.eq('league_name', selectedLeague)
@@ -66,7 +71,9 @@ export default function StandingsPage() {
       .select('id', { count: 'exact', head: true })
       .eq('completed', true)
 
-    if (selectedRound !== 'Overall') {
+    if (selectedRound === 'Special') {
+      gamesQuery = gamesQuery.in('match_number', [5, 22, 30, 45, 49, 67])
+    } else if (selectedRound !== 'Overall') {
       gamesQuery = gamesQuery.eq('round_number', Number(selectedRound))
     }
 
@@ -109,6 +116,7 @@ export default function StandingsPage() {
           <option value="2">Round 2</option>
           <option value="3">Round 3</option>
           <option value="4">Round 4</option>
+          <option value="Special">Home Nations</option>
         </select>
       </div>
 
@@ -125,17 +133,13 @@ export default function StandingsPage() {
               <th className="p-2 text-left">Pos</th>
               <th className="p-2 text-left">Player</th>
               <th className="p-2 text-left">League</th>
-
               <th className="p-2 text-right">Points Scored</th>
 
               <th className="p-2 text-right whitespace-normal leading-tight max-w-[90px]">
-              Correct Results & Scores
+                Correct Results & Scores
               </th>
-              
+
               <th className="p-2 text-right">Correct Results</th>
-            
-
-
             </tr>
           </thead>
 

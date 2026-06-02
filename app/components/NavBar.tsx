@@ -38,11 +38,21 @@ export default function NavBar() {
         </Link>
 
         {loggedIn && (
+        <>
             <Link
             href="/predictions"
             className="hover:underline"
-            >   Predictions
+            >
+            Predictions
             </Link>
+
+            <Link
+            href="/results"
+            className="hover:underline"
+            >
+            Results
+            </Link>
+        </>
         )}
 
             <Link

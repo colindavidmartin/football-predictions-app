@@ -173,6 +173,15 @@ export default function LoginPage() {
             className="w-full rounded border border-gray-300 p-3 text-black"
           />
 
+          {mode === 'signup' && (
+  <p className="text-xs text-gray-600">
+    This is a private invitation-only competition. Your display name will be
+    visible to other participants in league tables and statistics, but your
+    email address and personal information will never be shared with other
+    users.
+  </p>
+)}
+
           <button
             onClick={mode === 'login' ? handleLogin : handleSignup}
             className="w-full rounded bg-black p-3 text-white"
