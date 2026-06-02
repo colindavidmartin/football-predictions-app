@@ -87,6 +87,9 @@ export default function ResultsPage() {
       ? players
       : players.filter((player) => player.league_name === selectedLeague)
 
+  const totalPoints = results.reduce((sum, row) => sum + (row.points ?? 0), 0)
+  const gamesShown = results.length
+
   return (
     <main className="min-h-screen p-4">
       <h1 className="text-3xl font-bold mb-2">
@@ -96,6 +99,17 @@ export default function ResultsPage() {
       <p className="mb-4 text-sm text-gray-600">
         Completed matches only. Select a player to view their predictions and points.
       </p>
+
+        <div className="mb-4 flex gap-4 text-sm">
+        <div className="rounded border bg-white px-3 py-2">
+            Games shown: <strong>{gamesShown}</strong>
+        </div>
+
+        <div className="rounded border bg-white px-3 py-2">
+            Total points: <strong>{totalPoints}</strong>
+        </div>
+        </div>
+
 
       {message && (
         <p className="mb-4 text-sm text-blue-700">
@@ -147,14 +161,25 @@ export default function ResultsPage() {
               <th className="p-2 text-right">Home</th>
               <th className="p-2 text-center">Prediction</th>
               <th className="p-2 text-center">Result</th>
-              <th className="p-2 text-left">Away</th>
-              <th className="p-2 text-right">Pts</th>
+                <th className="p-2 text-left">Away</th>
+                <th className="p-2 text-center">Outcome</th>
+                <th className="p-2 text-right">Pts</th>
             </tr>
           </thead>
 
           <tbody>
             {results.map((row) => (
-              <tr key={`${row.entry_id}-${row.fixture_id}`} className="border-t">
+
+                <tr
+                key={`${row.entry_id}-${row.fixture_id}`}
+                className={`
+                    border-t
+                    ${row.exact_score ? 'bg-green-50' : ''}
+                    ${!row.exact_score && row.correct_result ? 'bg-blue-50' : ''}
+                    ${row.predicted_home_goals === null || row.predicted_away_goals === null ? 'bg-gray-100' : ''}
+                `}
+                >
+
                 <td className="p-2">{row.match_number}</td>
                 <td className="p-2">{row.round_number}</td>
 
@@ -191,11 +216,21 @@ export default function ResultsPage() {
                 </td>
 
                 <td className="p-2 font-medium">
-                  {row.away_team}
+                {row.away_team}
+                </td>
+
+                <td className="p-2 text-center text-xs">
+                {row.predicted_home_goals === null || row.predicted_away_goals === null
+                    ? 'Missed'
+                    : row.exact_score
+                    ? '✓ Exact Score'
+                    : row.correct_result
+                    ? '✓ Correct Result'
+                    : '✗ Incorrect'}
                 </td>
 
                 <td className="p-2 text-right font-bold">
-                  {row.points ?? 0}
+                {row.points ?? 0}
                 </td>
               </tr>
             ))}
