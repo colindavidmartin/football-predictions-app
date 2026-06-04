@@ -87,12 +87,20 @@ export default function NavBar() {
 
       <div className="text-sm font-semibold text-black">
       <Link
-        href="/admin/results"
-        className="hover:underline"
-        > Admin Results
-        </Link>
-      
-       </div>
+  href="/admin/results"
+  className="hover:underline"
+>
+  Enter Results
+</Link>
+
+<Link
+  href="/admin/missing-predictions"
+  className="hover:underline"
+>
+  Missing Predictions
+</Link>
+        </div>
+    
     </nav>
   )
 }

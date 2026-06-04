@@ -8,6 +8,7 @@ export default function MissingPredictionsPage() {
   const [toDate, setToDate] = useState('')
   const [rows, setRows] = useState<any[]>([])
   const [message, setMessage] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     checkAdmin()
@@ -29,7 +30,10 @@ export default function MissingPredictionsPage() {
 
     if (!profile?.is_admin) {
       setMessage('You do not have admin access.')
+      return
     }
+
+    setIsAdmin(true)
   }
 
   async function loadMissingPredictions() {
@@ -69,6 +73,22 @@ export default function MissingPredictionsPage() {
       ])
     ).values()
   )
+
+  if (!isAdmin) {
+    return (
+      <main className="min-h-screen p-4">
+        <h1 className="text-3xl font-bold mb-2">
+          Missing Predictions
+        </h1>
+
+        {message && (
+          <p className="text-sm text-blue-700">
+            {message}
+          </p>
+        )}
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen p-4">
@@ -122,6 +142,8 @@ export default function MissingPredictionsPage() {
               {player.email ?? 'No email stored'}
               {' · '}
               {player.league_name ?? ''}
+              {' · '}
+              {player.department ?? ''}
             </div>
           ))}
         </div>
@@ -136,6 +158,7 @@ export default function MissingPredictionsPage() {
               <th className="p-2 text-left">Player</th>
               <th className="p-2 text-left">Email</th>
               <th className="p-2 text-left">League</th>
+              <th className="p-2 text-left">Department</th>
             </tr>
           </thead>
 
@@ -164,6 +187,10 @@ export default function MissingPredictionsPage() {
 
                 <td className="p-2">
                   {row.league_name ?? ''}
+                </td>
+
+                <td className="p-2">
+                  {row.department ?? ''}
                 </td>
               </tr>
             ))}

@@ -133,6 +133,7 @@ export default function StandingsPage() {
               <th className="p-2 text-left">Pos</th>
               <th className="p-2 text-left">Player</th>
               <th className="p-2 text-left">League</th>
+              <th className="p-2 text-left">Department</th>
               <th className="p-2 text-right">Points Scored</th>
 
               <th className="p-2 text-right whitespace-normal leading-tight max-w-[90px]">
@@ -149,6 +150,7 @@ export default function StandingsPage() {
                 <td className="p-2">{index + 1}</td>
                 <td className="p-2 font-medium">{row.display_name}</td>
                 <td className="p-2">{row.league_name ?? ''}</td>
+                <td className="p-2">{row.department ?? ''}</td>
                 <td className="p-2 text-right font-bold">{row.total_points}</td>
                 <td className="p-2 text-right">{row.exact_scores}</td>
                 <td className="p-2 text-right">{row.correct_results}</td>
