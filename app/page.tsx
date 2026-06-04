@@ -39,13 +39,12 @@ export default function HomePage() {
         
           <li><strong><u> Winner:</u></strong></li>
           <li>6 chances to win, a prediction competition for:</li>
-          <li>1) Group Stages, round 1 fixtures  - 15% of pot</li>
-          <li>2) Group Stages, round 2 fixtures  - 15% of pot</li>    
-          <li>3) Group Stages, round 3 fixtures  - 15% of pot</li> 
-          <li>4) Home nations (group stage games)  - 15% of pot</li>
-          <li>5) Round 4 qtr/semi/final fixtures  - 15% of pot</li>
-          <li>6) Overall, all fixtures  - 15% of pot</li>
-          <li>with 10% of pot going to charity </li>
+          <li>1) Group Stages, round 1 fixtures</li>
+          <li>2) Group Stages, round 2 fixtures</li>    
+          <li>3) Group Stages, round 3 fixtures</li> 
+          <li>4) Home nations (group stage games)</li>
+          <li>5) Round 4 qtr/semi/final fixtures </li>
+          <li>6) Overall, all fixtures</li>
           <li>For each round there will be a first (60%), second (30%) and third place (10%), decided by: </li>
           <li>+Highest points tally, if level then </li>
           <li>+person with most correct result and scores will win (ie person who predicts the most matches correctly), if still level then </li>

@@ -17,6 +17,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [leagueName, setLeagueName] = useState('')
+  const [department, setDepartment] = useState('')
   const [supportedTeam, setSupportedTeam] = useState('')
   const [message, setMessage] = useState('')
 
@@ -63,7 +64,6 @@ export default function LoginPage() {
         league_name: leagueName,
         supported_team: supportedTeam,
         department: department,
-        competition_type: competitionType,
       })
     }
 
@@ -141,6 +141,14 @@ export default function LoginPage() {
                 <option value="DJH (Derby)">DJH League</option>
                 <option value="Family">Family League</option>
               </select>
+
+            <input
+              type="text"
+              placeholder="Department, Team, or Product"
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+              className="w-full rounded border border-gray-300 p-3 text-black"
+            />
 
               <select
                 value={supportedTeam}
