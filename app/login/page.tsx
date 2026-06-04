@@ -59,8 +59,11 @@ export default function LoginPage() {
       await supabase.from('profiles').upsert({
         id: data.user.id,
         display_name: displayName || email,
+        email: email,
         league_name: leagueName,
         supported_team: supportedTeam,
+        department: department,
+        competition_type: competitionType,
       })
     }
 
