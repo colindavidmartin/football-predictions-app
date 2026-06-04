@@ -144,7 +144,7 @@ export default function LoginPage() {
 
             <input
               type="text"
-              placeholder="Department, Team, or Product"
+              placeholder="Department, Team, Location or Product"
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
               className="w-full rounded border border-gray-300 p-3 text-black"
