@@ -15,9 +15,9 @@ export default function HomePage() {
         <ul className="space-y-2 text-sm text-gray-700 mb-6">
           <li><strong><u>General rules:</u></strong></li> 
           <li>  +Predictions competition for 2026 World Cup (mens) tournament matches </li>
-          <li>  +Entry fee is £10 payable by 5pm on Friday 11th June </li>
+          <li>  +Entry fee is £10 payable by 5pm on Thursday 11th June </li>
           <li>  +To enter simply register on the signup page - complete your name, league you are entering (Ideagen or DJH), add an email address and password </li>
-          <li>  +Predictions for each game must be submitted by 1 minute before KO for each game – we will try and send a reminder outs (but its your responsibility to remember)</li>
+          <li>  +Enter Prediction, and save for each game / or save all predictions. Predictions for each game must be submitted by 1 minute before KO for each game – we will try and send a reminder outs (but its your responsibility to remember)</li>
           <li>  +Predictions are for 90 minutes score</li>
           <li>  +No changes can be made to predictions after KO, but you can change/amend a prediction whenever your want before KO </li>
           <li>  +Entries are restricted to one per person </li>
