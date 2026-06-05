@@ -140,6 +140,7 @@ export default function LoginPage() {
                 <option value="Ideagen">Ideagen League</option>
                 <option value="DJH (Derby)">DJH League</option>
                 <option value="Family">Family League</option>
+                <option value="Basford FC">Basford FC</option>                
               </select>
 
             <input
