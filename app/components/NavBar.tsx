@@ -46,6 +46,13 @@ export default function NavBar() {
             Predictions
             </Link>
 
+<Link
+  href="/result-stats"
+  className="hover:underline"
+>
+  Result Stats
+</Link>
+
             <Link
             href="/results"
             className="hover:underline"
