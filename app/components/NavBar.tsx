@@ -5,12 +5,26 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 
 export default function NavBar() {
-  const [loggedIn, setLoggedIn] = useState(false)
+const [loggedIn, setLoggedIn] = useState(false)
+const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     async function checkUser() {
-      const { data: { user } } = await supabase.auth.getUser()
-      setLoggedIn(!!user)
+const { data: { user } } = await supabase.auth.getUser()
+
+setLoggedIn(!!user)
+
+if (user) {
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('is_admin')
+    .eq('id', user.id)
+    .single()
+
+  setIsAdmin(!!profile?.is_admin)
+} else {
+  setIsAdmin(false)
+}
     }
 
     checkUser()
@@ -46,12 +60,20 @@ export default function NavBar() {
             Predictions
             </Link>
 
-<Link
-  href="/result-stats"
-  className="hover:underline"
->
-  Result Stats
-</Link>
+            <Link
+            href="/prediction-stats"
+            className="hover:underline"
+            >   Prediction Stats
+            </Link>
+
+
+
+          <Link
+            href="/result-stats"
+            className="hover:underline"
+          >
+            Result Stats
+          </Link>
 
             <Link
             href="/results"
@@ -62,11 +84,6 @@ export default function NavBar() {
         </>
         )}
 
-            <Link
-            href="/prediction-stats"
-            className="hover:underline"
-            >   Prediction Stats
-            </Link>
 
         <Link
         href="/standings"
@@ -92,22 +109,40 @@ export default function NavBar() {
 )}
       </div>
 
-      <div className="text-sm font-semibold text-black">
-      <Link
-  href="/admin/results"
-  className="hover:underline"
->
-  Enter Results
-</Link>
 
-<Link
-  href="/admin/missing-predictions"
-  className="hover:underline"
->
-  Missing Predictions
-</Link>
-        </div>
-    
+{isAdmin && (
+  <div className="relative group text-sm font-semibold text-black">
+    <button
+      type="button"
+      className="hover:underline"
+    >
+      Admin
+    </button>
+
+    <div className="absolute right-0 z-20 hidden min-w-48 rounded border bg-white shadow-lg group-hover:block">
+      <Link
+        href="/admin/results"
+        className="block px-4 py-2 hover:bg-gray-100"
+      >
+        Enter Results
+      </Link>
+
+      <Link
+        href="/admin/missing-predictions"
+        className="block px-4 py-2 hover:bg-gray-100"
+      >
+        Missing Predictions
+      </Link>
+
+      <Link
+        href="/admin/daily-update"
+        className="block px-4 py-2 hover:bg-gray-100"
+      >
+        Daily Update
+      </Link>
+    </div>
+  </div>
+)}
     </nav>
   )
 }

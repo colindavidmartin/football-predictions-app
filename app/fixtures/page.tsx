@@ -93,6 +93,7 @@ export default async function FixturesPage({
                           hour: '2-digit',
                           minute: '2-digit',
                           hour12: false,
+                          timeZone: 'UTC',
                         })}
                       </span>
                     </div>
@@ -125,6 +126,7 @@ export default async function FixturesPage({
           hour: '2-digit',
           minute: '2-digit',
           hour12: false,
+          timeZone: 'UTC',
         })}
       </div>
 
