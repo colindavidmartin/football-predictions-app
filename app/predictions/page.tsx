@@ -273,6 +273,7 @@ const hasMissingPredictions = missingOpenCount > 0
                       weekday: 'short',
                       day: '2-digit',
                       month: 'short',
+                      timeZone: 'UTC',
                     })}
                   </td>
 

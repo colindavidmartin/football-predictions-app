@@ -88,6 +88,7 @@ export default async function FixturesPage({
                         {new Date(fixture.kickoff_at).toLocaleDateString('en-GB', {
                           day: '2-digit',
                           month: 'short',
+                          timeZone: 'UTC',
                         })}{' '}
                         {new Date(fixture.kickoff_at).toLocaleTimeString('en-GB', {
                           hour: '2-digit',
@@ -121,6 +122,7 @@ export default async function FixturesPage({
           weekday: 'short',
           day: '2-digit',
           month: 'short',
+          timeZone: 'UTC',
         })}{' '}
         {new Date(fixture.kickoff_at).toLocaleTimeString('en-GB', {
           hour: '2-digit',
