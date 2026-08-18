@@ -20,44 +20,81 @@ export default function ResultsPage() {
   }, [selectedLeague, selectedEntryId])
 
   async function loadPage() {
-    const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
 
-    if (!user) {
-      setMessage('Please log in first.')
-      return
-    }
-
-    const { data: profileRows } = await supabase
-      .from('completed_prediction_results')
-      .select('entry_id, display_name, league_name, profile_id')
-
-    const uniqueLeagues = Array.from(
-      new Set((profileRows ?? []).map((row) => row.league_name).filter(Boolean))
-    ).sort()
-
-    const uniquePlayers = Array.from(
-      new Map(
-        (profileRows ?? []).map((row) => [
-          row.entry_id,
-          {
-            entry_id: row.entry_id,
-            display_name: row.display_name,
-            league_name: row.league_name,
-            profile_id: row.profile_id,
-          },
-        ])
-      ).values()
-    ).sort((a: any, b: any) => a.display_name.localeCompare(b.display_name))
-
-    setLeagues(uniqueLeagues)
-    setPlayers(uniquePlayers)
-
-    const myPlayer = uniquePlayers.find((player: any) => player.profile_id === user.id)
-
-    if (myPlayer) {
-      setSelectedEntryId(myPlayer.entry_id)
-    }
+  if (!user) {
+    setMessage('Please log in first.')
+    return
   }
+
+  const { data: competition, error: competitionError } = await supabase
+    .from('competitions')
+    .select('*')
+    .eq('active', true)
+    .single()
+
+  if (competitionError || !competition) {
+    setMessage('No active competition found.')
+    return
+  }
+
+  const { data: competitionEntries, error: entriesError } = await supabase
+    .from('entries')
+    .select('id')
+    .eq('competition_id', competition.id)
+
+  if (entriesError) {
+    setMessage(entriesError.message)
+    return
+  }
+
+  const entryIds = competitionEntries?.map((entry) => entry.id) ?? []
+
+  if (entryIds.length === 0) {
+    setPlayers([])
+    setLeagues([])
+    return
+  }
+
+  const { data: profileRows, error: profileError } = await supabase
+    .from('completed_prediction_results')
+    .select('entry_id, display_name, league_name, profile_id')
+    .in('entry_id', entryIds)
+
+  if (profileError) {
+    setMessage(profileError.message)
+    return
+  }
+
+  const uniqueLeagues = Array.from(
+    new Set((profileRows ?? []).map((row) => row.league_name).filter(Boolean))
+  ).sort()
+
+  const uniquePlayers = Array.from(
+    new Map(
+      (profileRows ?? []).map((row) => [
+        row.entry_id,
+        {
+          entry_id: row.entry_id,
+          display_name: row.display_name,
+          league_name: row.league_name,
+          profile_id: row.profile_id,
+        },
+      ])
+    ).values()
+  ).sort((a: any, b: any) => a.display_name.localeCompare(b.display_name))
+
+  setLeagues(uniqueLeagues)
+  setPlayers(uniquePlayers)
+
+  const myPlayer = uniquePlayers.find(
+    (player: any) => player.profile_id === user.id
+  )
+
+  if (myPlayer) {
+    setSelectedEntryId(myPlayer.entry_id)
+  }
+}
 
   async function loadResults() {
     if (!selectedEntryId) return

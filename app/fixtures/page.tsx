@@ -11,11 +11,29 @@ export default async function FixturesPage({
   const params = await searchParams
   const view = params?.view ?? 'group'
 
-  const { data: fixtures, error } = await supabase
-    .from('fixtures')
-    .select('*')
-    .order(view === 'date' ? 'kickoff_at' : 'group_name')
-    .order('kickoff_at')
+
+
+const { data: competition } = await supabase
+  .from('competitions')
+  .select('*')
+  .eq('active', true)
+  .single()
+
+if (!competition) {
+  return (
+    <main className="min-h-screen p-6">
+      <p>No active competition found.</p>
+    </main>
+  )
+}
+
+const { data: fixtures, error } = await supabase
+  .from('fixtures')
+  .select('*')
+  .eq('competition_id', competition.id)
+  .order(view === 'date' ? 'kickoff_at' : 'group_name')
+  .order('kickoff_at')
+
 
   const groupedFixtures = (fixtures ?? []).reduce((groups: any, fixture) => {
     const group = fixture.group_name ?? 'Other'
@@ -31,9 +49,9 @@ export default async function FixturesPage({
 
   return (
     <main className="min-h-screen p-6">
-      <h1 className="text-4xl font-bold mb-4">
-        World Cup 2026 Fixtures
-      </h1>
+<h1 className="text-4xl font-bold mb-4">
+  {competition.name} Fixtures
+</h1>
 
       <div className="mb-6 flex gap-3">
         <Link
@@ -100,7 +118,7 @@ export default async function FixturesPage({
                     </div>
 
                     <p className="text-[10px] text-gray-500">
-                      {fixture.location}
+                      {fixture.group_name}
                     </p>
                   </div>
                 ))}
@@ -137,7 +155,7 @@ export default async function FixturesPage({
       </div>
 
       <div className="w-48 text-right text-gray-500 text-[8px] md:text-[10px] lg:text-[12px]">
-  {fixture.location}
+  {fixture.group_name}
 </div>
     </div>
   ))}

@@ -4,10 +4,35 @@ import { supabase } from '../../lib/supabase'
 import Link from 'next/link'
 
 export default async function PredictionStatsPage() {
-  const { data: fixtures, error } = await supabase
-    .from('prediction_outcome_stats')
-    .select('*')
-    .order('kickoff_at')
+const { data: competition } = await supabase
+  .from('competitions')
+  .select('*')
+  .eq('active', true)
+  .single()
+
+if (!competition) {
+  return (
+    <main className="min-h-screen p-6">
+      <p>No active competition found.</p>
+    </main>
+  )
+}
+
+const { data: competitionFixtures } = await supabase
+  .from('fixtures')
+  .select('id')
+  .eq('competition_id', competition.id)
+
+const fixtureIds = competitionFixtures?.map((fixture) => fixture.id) ?? []
+
+const { data: fixtures, error } = fixtureIds.length > 0
+  ? await supabase
+      .from('prediction_outcome_stats')
+      .select('*')
+      .in('fixture_id', fixtureIds)
+      .order('kickoff_at')
+  : { data: [], error: null }
+  
 
   return (
     <main className="min-h-screen p-6">

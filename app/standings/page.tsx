@@ -9,30 +9,73 @@ export default function StandingsPage() {
   const [selectedLeague, setSelectedLeague] = useState('All')
   const [selectedRound, setSelectedRound] = useState('Overall')
   const [leagues, setLeagues] = useState<string[]>([])
+  const [rounds, setRounds] = useState<number[]>([])
   const [standings, setStandings] = useState<any[]>([])
   const [gamesPlayed, setGamesPlayed] = useState(0)
   const [message, setMessage] = useState('')
+  const [competitionId, setCompetitionId] = useState<string | null>(null)
+  
 
-  useEffect(() => {
-    loadLeagues()
-  }, [])
+useEffect(() => {
+  loadCompetition()
+}, [])
 
-  useEffect(() => {
-    loadStandings()
-  }, [selectedLeague, selectedRound])
+useEffect(() => {
+  if (!competitionId) return
 
-  async function loadLeagues() {
-    const { data } = await supabase
-      .from('profiles')
-      .select('league_name')
-      .not('league_name', 'is', null)
+  loadLeagues()
+  loadRounds()
+  loadStandings()
+}, [competitionId, selectedLeague, selectedRound])
 
-    const uniqueLeagues = Array.from(
-      new Set((data ?? []).map((row) => row.league_name).filter(Boolean))
-    ).sort()
+async function loadCompetition() {
+  const { data: competition, error } = await supabase
+    .from('competitions')
+    .select('id')
+    .eq('active', true)
+    .single()
 
-    setLeagues(uniqueLeagues)
+  if (error || !competition) {
+    setMessage('No active competition found.')
+    return
   }
+
+  setCompetitionId(competition.id)
+}
+  async function loadLeagues() {
+  if (!competitionId) return
+
+  const { data } = await supabase
+    .from('league_table')
+    .select('league_name')
+    .eq('competition_id', competitionId)
+    .not('league_name', 'is', null)
+
+  const uniqueLeagues = Array.from(
+    new Set((data ?? []).map((row) => row.league_name).filter(Boolean))
+  ).sort()
+
+  setLeagues(uniqueLeagues)
+}
+
+async function loadRounds() {
+  if (!competitionId) return
+
+  const { data } = await supabase
+    .from('fixtures')
+    .select('round_number')
+    .eq('competition_id', competitionId)
+    .not('round_number', 'is', null)
+
+  const uniqueRounds = Array.from(
+    new Set((data ?? []).map((row) => row.round_number))
+  ).sort((a, b) => a - b)
+
+  setRounds(uniqueRounds)
+}
+
+
+
 
   async function loadStandings() {
     setMessage('')
@@ -50,6 +93,8 @@ export default function StandingsPage() {
         .eq('round_number', Number(selectedRound))
     }
 
+    standingsQuery = standingsQuery.eq('competition_id', competitionId)
+
     if (selectedLeague !== 'All') {
       standingsQuery = standingsQuery.eq('league_name', selectedLeague)
     }
@@ -66,10 +111,12 @@ export default function StandingsPage() {
 
     setStandings(standingsData ?? [])
 
-    let gamesQuery = supabase
-      .from('fixtures')
-      .select('id', { count: 'exact', head: true })
-      .eq('completed', true)
+    
+let gamesQuery = supabase
+  .from('fixtures')
+  .select('id', { count: 'exact', head: true })
+  .eq('competition_id', competitionId)
+  .eq('completed', true)
 
     if (selectedRound === 'Special') {
       gamesQuery = gamesQuery.in('match_number', [5, 22, 30, 45, 49, 67])
@@ -111,12 +158,16 @@ export default function StandingsPage() {
           onChange={(e) => setSelectedRound(e.target.value)}
           className="rounded border border-gray-300 bg-white px-3 py-2 text-sm text-black"
         >
-          <option value="Overall">Overall</option>
-          <option value="1">Round 1</option>
-          <option value="2">Round 2</option>
-          <option value="3">Round 3</option>
-          <option value="4">Round 4</option>
-          <option value="Special">Home Nations</option>
+
+
+<option value="Overall">Overall</option>
+
+{rounds.map((round) => (
+  <option key={round} value={String(round)}>
+    Round {round}
+  </option>
+))}
+
         </select>
       </div>
 

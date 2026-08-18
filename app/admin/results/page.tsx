@@ -33,10 +33,28 @@ export default function AdminResultsPage() {
     return
   }
 
-  const { data } = await supabase
-    .from('fixtures')
-    .select('*')
-    .order('kickoff_at')
+const { data: competition, error: competitionError } = await supabase
+  .from('competitions')
+  .select('id')
+  .eq('active', true)
+  .single()
+
+if (competitionError || !competition) {
+  setMessage('No active competition found.')
+  return
+}
+
+const { data, error: fixturesError } = await supabase
+  .from('fixtures')
+  .select('*')
+  .eq('competition_id', competition.id)
+  .order('kickoff_at')
+
+if (fixturesError) {
+  setMessage(fixturesError.message)
+  return
+}
+
 
     setFixtures(data ?? [])
 

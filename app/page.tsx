@@ -15,7 +15,7 @@ export default function HomePage() {
         <ul className="space-y-2 text-sm text-gray-700 mb-6">
           <li><strong><u>General rules:</u></strong></li> 
           <li>  +Predictions competition for 2026 World Cup (mens) tournament matches </li>
-          <li>  +Entry fee is £10 payable by 5pm on Thursday 11th June </li>
+          
           <li>  +To enter simply register on the signup page - complete your name, league you are entering (Ideagen or DJH), add an email address and password </li>
           <li>  +Enter Prediction, and save for each game / or save all predictions. Predictions for each game must be submitted by 1 minute before KO for each game – we will try and send a reminder outs (but its your responsibility to remember)</li>
           <li>  +Predictions are for 90 minutes score</li>
@@ -38,13 +38,6 @@ export default function HomePage() {
           <li>Result:	1 - 1, if	Prediction:	2 - 2, then	Pts Scored:	7, allocated 7 points for a draw</li>
         
           <li><strong><u> Winner:</u></strong></li>
-          <li>6 chances to win, a prediction competition for:</li>
-          <li>1) Group Stages, round 1 fixtures</li>
-          <li>2) Group Stages, round 2 fixtures</li>    
-          <li>3) Group Stages, round 3 fixtures</li> 
-          <li>4) Home nations (group stage games)</li>
-          <li>5) Round 4 qtr/semi/final fixtures </li>
-          <li>6) Overall, all fixtures</li>
           <li>For each round there will be a first (60%), second (30%) and third place (10%), decided by: </li>
           <li>+Highest points tally, if level then </li>
           <li>+person with most correct result and scores will win (ie person who predicts the most matches correctly), if still level then </li>

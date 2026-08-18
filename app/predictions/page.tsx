@@ -24,7 +24,7 @@ export default function PredictionsPage() {
     const { data: competition } = await supabase
       .from('competitions')
       .select('*')
-      .limit(1)
+      .eq('active', true)
       .single()
 
     if (!competition) {
