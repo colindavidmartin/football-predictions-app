@@ -5,18 +5,18 @@ export default function HomePage() {
     <main className="min-h-screen p-6">
       <section className="mx-auto max-w-3xl rounded-xl border bg-white p-6 shadow-sm">
         <h1 className="text-4xl font-bold mb-3">
-          World Cup 2026 Predictor Game
+          Predictor Game - 2026/27 Season
         </h1>
 
         <p className="mb-6 text-gray-700">
-          Enter your match predictions, track your scores, and follow the league table as the tournament unfolds.
+          Enter your match predictions, track your scores, and follow the league table as the season unfolds.
         </p>
 
         <ul className="space-y-2 text-sm text-gray-700 mb-6">
           <li><strong><u>General rules:</u></strong></li> 
-          <li>  +Predictions competition for 2026 World Cup (mens) tournament matches </li>
+          <li>  +Predictions competition for weekly round of fixtures </li>
           
-          <li>  +To enter simply register on the signup page - complete your name, league you are entering (Ideagen or DJH), add an email address and password </li>
+          <li>  +To enter simply register on the signup page - complete your name, add an email address and password </li>
           <li>  +Enter Prediction, and save for each game / or save all predictions. Predictions for each game must be submitted by 1 minute before KO for each game – we will try and send a reminder outs (but its your responsibility to remember)</li>
           <li>  +Predictions are for 90 minutes score</li>
           <li>  +No changes can be made to predictions after KO, but you can change/amend a prediction whenever your want before KO </li>
@@ -37,12 +37,6 @@ export default function HomePage() {
           <li>Result:	1 - 1, if	Prediction:	1 - 1, then	Pts Scored:	14,	allocated for 7 points for a draw, plus 5 points for correct result and score, plus 1 point (2) per goal</li>
           <li>Result:	1 - 1, if	Prediction:	2 - 2, then	Pts Scored:	7, allocated 7 points for a draw</li>
         
-          <li><strong><u> Winner:</u></strong></li>
-          <li>For each round there will be a first (60%), second (30%) and third place (10%), decided by: </li>
-          <li>+Highest points tally, if level then </li>
-          <li>+person with most correct result and scores will win (ie person who predicts the most matches correctly), if still level then </li>
-          <li>+person with most results will win (ie person who predicts the right team to win), if still level then </li>
-          <li>+then prize will be shared! </li>
 
         </ul>
 
