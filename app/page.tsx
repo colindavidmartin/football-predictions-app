@@ -12,6 +12,7 @@ export default function HomePage() {
           Enter your match predictions, track your scores, and follow the league table as the season unfolds.
         </p>
 
+
         <ul className="space-y-2 text-sm text-gray-700 mb-6">
           <li><strong><u>General rules:</u></strong></li> 
           <li>  +Predictions competition for weekly round of fixtures </li>
